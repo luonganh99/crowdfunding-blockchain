@@ -25,7 +25,7 @@ contract Campaign {
         _;
     }
 
-    constructor(uint256 minimum, address creator) {
+    constructor(uint256 minimum, address creator) public {
         minimumContribution = minimum;
         manager = creator;
     }
@@ -42,7 +42,7 @@ contract Campaign {
     function createRequest(
         uint256 amount,
         string memory description,
-        address recipient
+        address payable recipient
     ) public onlyManager {
         Request storage newRequest = requests[requestsCount++];
         newRequest.amount = amount;
