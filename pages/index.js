@@ -1,8 +1,7 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import styles from '../styles/Home.module.css';
-import web3 from '../web3';
+import NavBar from '../components/NavBar';
+import Hero from '../components/Hero';
+import Footer from '../components/Footer';
+import Card from '../components/Card';
 
 export default function Home() {
     // useEffect(() => {
@@ -20,5 +19,12 @@ export default function Home() {
     //     getData();
     // }, []);
 
-    return <div className={styles.container}></div>;
+    return (
+        <div>
+            <NavBar />
+            <Hero />
+            <Card />
+            <Footer />
+        </div>
+    );
 }
