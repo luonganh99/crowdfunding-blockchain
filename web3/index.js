@@ -5,13 +5,14 @@ let web3;
 if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
     // we are in the browser and meta mask is installed
     web3 = new Web3(window.web3.currentProvider);
+    console.log(web3);
 } else {
     // we are on the server *OR* meta mask is not running
     // creating our own provider
     // const provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/01183f6b6e8d4aaf8aa97136aded1264');
-
     // web3 = new Web3(provider);
-    window.alert('Please install meta mask first');
+    // window.alert('Please install meta mask first');
+    // console.log('asdf');
 }
 
 export default web3;
