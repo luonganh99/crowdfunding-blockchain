@@ -11,9 +11,12 @@ contract Campaign {
         mapping(address => bool) approvals;
     }
 
+    string public name;
+    string public description;
     address public manager;
     uint256 public minimumContribution;
-    // Request[] public requests;
+    uint256 public targetContribution;
+
     uint256 approversCount;
     mapping(address => bool) approvers;
 
@@ -21,17 +24,26 @@ contract Campaign {
     mapping(uint256 => Request) requests;
 
     modifier onlyManager() {
-        require(msg.sender == manager, "Sender not authorized.");
+        require(msg.sender == manager, 'Sender not authorized.');
         _;
     }
 
-    constructor(uint256 minimum, address creator) public {
+    constructor(
+        string memory campaignName,
+        string memory campaignDescription,
+        uint256 minimum,
+        uint256 target,
+        address creator
+    ) public {
+        name = campaignName;
+        description = campaignDescription;
         minimumContribution = minimum;
+        targetContribution = target;
         manager = creator;
     }
 
     function contribute() public payable {
-        require(msg.value > minimumContribution, "");
+        require(msg.value > minimumContribution, '');
 
         if (approvers[msg.sender] != true) {
             approvers[msg.sender] = true;
@@ -41,12 +53,12 @@ contract Campaign {
 
     function createRequest(
         uint256 amount,
-        string memory description,
+        string memory des,
         address payable recipient
     ) public onlyManager {
         Request storage newRequest = requests[requestsCount++];
         newRequest.amount = amount;
-        newRequest.description = description;
+        newRequest.description = des;
         newRequest.recipient = recipient;
         newRequest.isCompleted = false;
         newRequest.approvalsCount = 0;
@@ -77,6 +89,9 @@ contract Campaign {
         public
         view
         returns (
+            string memory,
+            string memory,
+            uint256,
             uint256,
             uint256,
             uint256,
@@ -85,7 +100,10 @@ contract Campaign {
         )
     {
         return (
+            name,
+            description,
             minimumContribution,
+            targetContribution,
             address(this).balance,
             requestsCount + 1,
             approversCount,

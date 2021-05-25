@@ -15,7 +15,7 @@ import {
     useColorModeValue,
     Stack
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 
 const Links = ['Home'];
 
@@ -56,6 +56,9 @@ export default function Navbar() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
+                        <Button variant={'solid'} colorScheme={'teal'} size={'sm'} mr={4} leftIcon={<AddIcon />}>
+                            Add Campaign
+                        </Button>
                         <Menu>
                             <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'}>
                                 <Avatar

@@ -1,7 +1,15 @@
 import Image from 'next/image';
-import { Box, Center, Heading, Text, Stack, Avatar, useColorModeValue } from '@chakra-ui/react';
-
-export default function Card() {
+import { Box, Center, Heading, Text, Stack, Avatar, useColorModeValue, Progress, Flex } from '@chakra-ui/react';
+import { BiTime } from 'react-icons/bi';
+import { FaHeart } from 'react-icons/fa';
+export default function Card({
+    campaign = {
+        name: 'Test',
+        description:
+            'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt odit atque sunt ducimus quibusdam quidem sequi quae iusto sit suscipit?',
+        manager: 'Achim Rolle'
+    }
+}) {
     return (
         <Center py={6}>
             <Box
@@ -20,31 +28,50 @@ export default function Card() {
                         layout={'fill'}
                     /> */}
                 </Box>
-                <Stack>
-                    <Text
+                <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
+                    <Avatar src={'https://avatars0.githubusercontent.com/u/1164541?v=4'} alt={'Author'} />
+                    <Stack direction={'column'} spacing={0} fontSize={'sm'}>
+                        <Text fontWeight={600}>by {campaign.manager}</Text>
+                        {/* <Text color={'gray.500'}>Feb 08, 2021 · 6min read</Text> */}
+                    </Stack>
+                </Stack>
+                <Stack mt={6}>
+                    {/* <Text
                         color={'green.500'}
                         textTransform={'uppercase'}
                         fontWeight={800}
                         fontSize={'sm'}
                         letterSpacing={1.1}>
                         Blog
-                    </Text>
+                    </Text> */}
                     <Heading color={useColorModeValue('gray.700', 'white')} fontSize={'2xl'} fontFamily={'body'}>
-                        Boost your conversion rate
+                        {campaign.name}
                     </Heading>
-                    <Text color={'gray.500'}>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-                        dolores et ea rebum.
+                    <Text color={'gray.500'}>{campaign.description}</Text>
+                </Stack>
+                <Stack mt={6}>
+                    <Text fontSize="lg">
+                        <span>{campaign.balance}</span> raised out of {campaign.targetContribution}
                     </Text>
+                    <Progress hasStripe value={64} />
                 </Stack>
-                <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-                    <Avatar src={'https://avatars0.githubusercontent.com/u/1164541?v=4'} alt={'Author'} />
-                    <Stack direction={'column'} spacing={0} fontSize={'sm'}>
-                        <Text fontWeight={600}>Achim Rolle</Text>
-                        <Text color={'gray.500'}>Feb 08, 2021 · 6min read</Text>
-                    </Stack>
-                </Stack>
+
+                <Flex justifyContent="space-between" mt={10}>
+                    <Flex flex="row" justifyContent="center" alignItems="center">
+                        <BiTime />
+                        <Text ml={3}>
+                            <span>{campaign.deadline}</span>
+                            Days Left
+                        </Text>
+                    </Flex>
+
+                    <Flex flex="row" justifyContent="center" alignItems="center">
+                        <FaHeart />
+                        <Text ml={3}>
+                            <span>3500 </span> Supporters
+                        </Text>
+                    </Flex>
+                </Flex>
             </Box>
         </Center>
     );

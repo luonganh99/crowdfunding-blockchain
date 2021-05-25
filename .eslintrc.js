@@ -30,13 +30,14 @@ module.exports = {
         'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
-        endOfLine: 'auto',
+        // 'react/endOfLine': 'off',
         'jsx-a11y/anchor-is-valid': [
             'error',
             {
                 components: ['Link'],
                 specialLink: ['hrefLeft', 'hrefRight'],
-                aspects: ['invalidHref', 'preferButton']
+                aspects: ['invalidHref', 'preferButton'],
+                endOfLine: 'auto'
             }
         ]
     }
