@@ -28,7 +28,7 @@ const NavLink = ({ children }) => (
             textDecoration: 'none',
             bg: useColorModeValue('gray.200', 'gray.700')
         }}
-        href={'#'}>
+        href={'/'}>
         {children}
     </Link>
 );
@@ -57,7 +57,7 @@ export default function Navbar() {
                     </HStack>
                     <Flex alignItems={'center'}>
                         <Button variant={'solid'} colorScheme={'teal'} size={'sm'} mr={4} leftIcon={<AddIcon />}>
-                            Add Campaign
+                            New Campaign
                         </Button>
                         <Menu>
                             <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'}>

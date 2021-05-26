@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/layout';
 import Slider from 'react-slick';
 import Card from './Card';
 
@@ -6,33 +7,20 @@ export default function CardSlider() {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 2,
-        slidesToScroll: 2
+        slidesToShow: 3,
+        slidesToScroll: 1
     };
 
     return (
-        <div>
-            <h2> Single Item</h2>
+        <Box w="90%" mx="auto" mb={20}>
             <Slider {...settings}>
-                <div>
-                    <Card />
-                </div>
-                <div>
-                    <Card />
-                </div>
-                <div>
-                    <Card />
-                </div>
-                <div>
-                    <Card />
-                </div>
-                <div>
-                    <Card />
-                </div>
-                <div>
-                    <Card />
-                </div>
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
             </Slider>
-        </div>
+        </Box>
     );
 }

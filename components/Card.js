@@ -1,7 +1,8 @@
-import Image from 'next/image';
-import { Box, Center, Heading, Text, Stack, Avatar, useColorModeValue, Progress, Flex } from '@chakra-ui/react';
+import { Avatar, Box, Center, Flex, Heading, Progress, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import { BiTime } from 'react-icons/bi';
 import { FaHeart } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+
 export default function Card({
     campaign = {
         name: 'Test',
@@ -10,10 +11,12 @@ export default function Card({
         manager: 'Achim Rolle'
     }
 }) {
+    const router = useRouter();
+
     return (
-        <Center py={6}>
+        <Center py={6} onClick={() => router.push('/campaigns/1')}>
             <Box
-                maxW={'445px'}
+                maxW={'370px'}
                 w={'full'}
                 bg={useColorModeValue('white', 'gray.900')}
                 boxShadow={'2xl'}
