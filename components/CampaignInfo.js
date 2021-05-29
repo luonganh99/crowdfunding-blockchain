@@ -25,19 +25,25 @@ export default function CampaignInfo() {
                 <Text fontSize="2.6rem">1.000.000$</Text>
                 <Text fontSize="0.9rem" color="#959595eb">
                     raised of{' '}
-                    <span style={{ color: '#ffffffeb', fontSize: '1rem', marginLeft: '3px', marginRight: '3px' }}>
+                    <Text as="span" color="#ffffffeb" fontSize="1rem" mx="3px">
                         2.000.000$
-                    </span>{' '}
+                    </Text>
                     goal
                 </Text>
             </Box>
             <Progress hasStripe value={64} />
             <Flex justifyContent="space-between">
                 <Text fontSize="md">
-                    <span style={{ fontSize: '1.3rem', fontWeight: 'bold' }}>4500</span> supporters
+                    <Text as="span" fontSize="1.3rem" fontWeight="bold">
+                        4500
+                    </Text>{' '}
+                    supporters
                 </Text>
                 <Text fontSize="md">
-                    <span style={{ fontSize: '1.3rem', fontWeight: 'bold' }}>78</span> days left
+                    <Text as="span" fontSize="1.3rem" fontWeight="bold">
+                        78
+                    </Text>{' '}
+                    days left
                 </Text>
             </Flex>
         </Stack>

@@ -12,7 +12,7 @@ export default function CardSlider() {
     };
 
     return (
-        <Box w="90%" mx="auto" mb={20}>
+        <Box w="90%" mx="auto" my={20}>
             <Slider {...settings}>
                 <Card />
                 <Card />
