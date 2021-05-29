@@ -1,7 +1,7 @@
 import { Avatar, Box, Center, Flex, Heading, Progress, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { BiTime } from 'react-icons/bi';
 import { FaHeart } from 'react-icons/fa';
-import { useRouter } from 'next/router';
 
 export default function Card({
     campaign = {
