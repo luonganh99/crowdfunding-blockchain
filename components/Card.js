@@ -14,7 +14,7 @@ export default function Card({
     const router = useRouter();
 
     return (
-        <Center py={6} onClick={() => router.push('/campaigns/1')}>
+        <Center py={6} _hover={{ cursor: 'grab' }}>
             <Box
                 maxW={'370px'}
                 w={'full'}
@@ -22,7 +22,15 @@ export default function Card({
                 boxShadow={'2xl'}
                 rounded={'md'}
                 p={6}
-                overflow={'hidden'}>
+                overflow={'hidden'}
+                transition="all 0.2s"
+                _hover={{
+                    cursor: 'pointer',
+                    transform: 'scale(1.03)',
+                    rounded: 'md',
+                    boxShadow: '3xl'
+                }}
+                onClick={() => router.push('/campaigns/1')}>
                 <Box h={'210px'} bg={'gray.100'} mt={-6} mx={-6} mb={6} pos={'relative'}>
                     {/* <Image
                         src={
