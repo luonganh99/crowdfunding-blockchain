@@ -2,7 +2,7 @@ import { Box, Center, Heading, Text } from '@chakra-ui/layout';
 import Slider from 'react-slick';
 import Card from './Card';
 
-export default function CardSlider() {
+export default function CardSlider({ campaigns }) {
     const settings = {
         dots: true,
         infinite: false,
@@ -18,12 +18,9 @@ export default function CardSlider() {
                 <Text color={'gray.500'}>View the fundraisers that are most active right now</Text>
             </Center>
             <Slider {...settings}>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {campaigns?.map((campaign, index) => (
+                    <Card key={index} campaign={campaign} />
+                ))}
             </Slider>
         </Box>
     );

@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import Layout from '../components/Layout';
 import web3 from '../web3';
 import campaignFactory from '../web3/campaignFactory';
+import campaign from '../web3/campaign';
 
 export default function Home() {
     useEffect(() => {
@@ -17,9 +18,13 @@ export default function Home() {
             console.log(accounts);
             console.log(balance);
 
-            const cp = await campaignFactory('0xb0876683588bf331AeAdBac5F4bC995837c86146')
+            // Address of contract
+            const campaignAddress = await campaignFactory('0xb0876683588bf331AeAdBac5F4bC995837c86146')
                 .methods.getCampaigns()
                 .call();
+            console.log(campaignAddress);
+            // const cp = await campaign(campaignAddress[0]).methods.getSummary().call();
+            const cp = await campaignAddress.map(async (add) => await campaign(add).methods.getSumary().call());
             console.log(cp);
         }
 
