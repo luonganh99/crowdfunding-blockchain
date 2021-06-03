@@ -3,25 +3,26 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Campaign {
     struct Request {
-        uint256 amount;
+        uint amount;
         string description;
         address payable recipient;
         bool isCompleted;
-        uint256 approvalsCount;
+        uint approvalsCount;
         mapping(address => bool) approvals;
     }
 
     string public name;
     string public description;
     address public manager;
-    uint256 public minimumContribution;
-    uint256 public targetContribution;
+    uint public minimumContribution;
+    uint public targetContribution;
+    uint public deadline;
 
-    uint256 approversCount;
+    uint approversCount = 0;
     mapping(address => bool) approvers;
 
-    uint256 requestsCount;
-    mapping(uint256 => Request) requests;
+    uint requestsCount = 0;
+    mapping(uint => Request) requests;
 
     modifier onlyManager() {
         require(msg.sender == manager, 'Sender not authorized.');
@@ -31,14 +32,16 @@ contract Campaign {
     constructor(
         string memory campaignName,
         string memory campaignDescription,
-        uint256 minimum,
-        uint256 target,
+        uint minimum,
+        uint target,
+        uint deadlineDate,
         address creator
     ) public {
         name = campaignName;
         description = campaignDescription;
         minimumContribution = minimum;
         targetContribution = target;
+        deadline = deadlineDate;
         manager = creator;
     }
 
@@ -52,7 +55,7 @@ contract Campaign {
     }
 
     function createRequest(
-        uint256 amount,
+        uint amount,
         string memory des,
         address payable recipient
     ) public onlyManager {
@@ -64,7 +67,7 @@ contract Campaign {
         newRequest.approvalsCount = 0;
     }
 
-    function approveRequest(uint256 index) public {
+    function approveRequest(uint index) public {
         Request storage request = requests[index];
 
         require(approvers[msg.sender]);
@@ -75,7 +78,7 @@ contract Campaign {
         request.approvalsCount++;
     }
 
-    function finalizeRequest(uint256 index) public onlyManager {
+    function finalizeRequest(uint index) public onlyManager {
         Request storage request = requests[index];
 
         require(request.approvalsCount > (approversCount / 2));
@@ -91,11 +94,12 @@ contract Campaign {
         returns (
             string memory,
             string memory,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
+            uint,
+            uint,
+            uint,
+            uint,
+            uint,
+            uint,
             address
         )
     {
@@ -104,6 +108,7 @@ contract Campaign {
             description,
             minimumContribution,
             targetContribution,
+            deadline,
             address(this).balance,
             requestsCount + 1,
             approversCount,
