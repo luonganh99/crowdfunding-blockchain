@@ -5,18 +5,12 @@ import { FaHeart } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 
-var relativeTime = require('dayjs/plugin/relativeTime');
-
-export default function Card({
-    campaign = {
-        name: 'Test',
-        description:
-            'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt odit atque sunt ducimus quibusdam quidem sequi quae iusto sit suscipit?',
-        manager: 'Achim Rolle'
-    }
-}) {
+export default function Card({ campaign }) {
     const router = useRouter();
-    dayjs.extend(relativeTime);
+
+    const handleClick = () => {
+        router.push(`/campaigns/${campaign.address}`);
+    };
 
     return (
         <Center py={6} _hover={{ cursor: 'grab' }}>
@@ -35,7 +29,7 @@ export default function Card({
                     rounded: 'md',
                     boxShadow: '3xl'
                 }}
-                onClick={() => router.push('/campaigns/1')}>
+                onClick={handleClick}>
                 <Box h={'210px'} mt={-6} mx={-6} mb={6} pos={'relative'}>
                     <Image
                         src={
@@ -73,8 +67,8 @@ export default function Card({
                         textOverflow="ellipsis"
                         display="-webkit-box"
                         css={{
-                            '-webkit-line-clamp': '3',
-                            '-webkit-box-orient': 'vertical'
+                            WebkitLineClamp: '3',
+                            WebkitBoxOrient: 'vertical'
                         }}
                         fontSize="sm">
                         {campaign.description}

@@ -1,4 +1,4 @@
-export default function (campaign) {
+export default function toCampaign(campaign, address) {
     return {
         name: campaign[0],
         description: campaign[1],
@@ -8,6 +8,7 @@ export default function (campaign) {
         balance: parseInt(campaign[5]),
         requests: parseInt(campaign[6]),
         approvers: parseInt(campaign[7]),
-        manager: campaign[8]
+        manager: campaign[8],
+        address
     };
 }

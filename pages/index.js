@@ -3,8 +3,8 @@ import CardSlider from '../components/CardSlider';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout';
 import web3 from '../web3';
-import campaignFactory from '../web3/campaignFactory';
-import campaign from '../web3/campaign';
+import campaignFactoryWeb3 from '../web3/campaignFactoryWeb3';
+import campaignWeb3 from '../web3/campaignWeb3';
 import toCampaign from '../utils/toCampaign';
 
 export default function Home() {
@@ -21,23 +21,16 @@ export default function Home() {
             console.log(accounts);
             console.log(balance);
 
-            // Address of contract
-            const campaignAddresses = await campaignFactory('0x1f1152cA2cFCCBD96E396a12D336A1637cEe76F2')
+            // List of campainAdress
+            const campaignAddresses = await campaignFactoryWeb3('0x1f1152cA2cFCCBD96E396a12D336A1637cEe76F2')
                 .methods.getCampaigns()
                 .call();
             console.log(campaignAddresses);
-            // let campaigns = [];
-            // campaignAddresses.forEach(async (add) => {
-            //     const camp = await campaign(add).methods.getSummary().call();
-            //     console.log(typeof camp);
-            //     campaigns.push(camp);
-            //     console.log(campaigns);
-            // });
 
             const updatedCampaigns = await Promise.all(
                 campaignAddresses.map(async (add) => {
-                    const camp = await campaign(add).methods.getSummary().call();
-                    return toCampaign(camp);
+                    const campaign = await campaignWeb3(add).methods.getSummary().call();
+                    return toCampaign(campaign, add);
                 })
             );
 

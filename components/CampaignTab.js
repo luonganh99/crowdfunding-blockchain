@@ -5,7 +5,7 @@ import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import { AiFillInfoCircle, AiOutlineLike } from 'react-icons/ai';
 import { RiTableFill } from 'react-icons/ri';
 
-export default function CampaignTab() {
+export default function CampaignTab({ description, requests }) {
     return (
         <Tabs isFitted variant="enclosed">
             <TabList mb="1em">
@@ -19,10 +19,7 @@ export default function CampaignTab() {
             </TabList>
             <TabPanels>
                 <TabPanel>
-                    <Text>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia libero, aut suscipit ex iusto quo
-                        harum perspiciatis laudantium alias maxime.
-                    </Text>
+                    <Text>{description}</Text>
                 </TabPanel>
                 <TabPanel>
                     <Table variant="striped" colorScheme="teal" size="sm">

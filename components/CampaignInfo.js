@@ -1,10 +1,11 @@
 import { Button } from '@chakra-ui/button';
 import { Box, Flex, Stack, Text } from '@chakra-ui/layout';
 import { Progress } from '@chakra-ui/progress';
+import dayjs from 'dayjs';
 import { BiDonateHeart } from 'react-icons/bi';
 import { FaFacebook } from 'react-icons/fa';
 
-export default function CampaignInfo() {
+export default function CampaignInfo({ campaign }) {
     return (
         <Stack>
             <Button
@@ -22,26 +23,26 @@ export default function CampaignInfo() {
                 Spread the world
             </Button>
             <Box>
-                <Text fontSize="2.6rem">1.000.000$</Text>
+                <Text fontSize="2.6rem">{campaign.balance}</Text>
                 <Text fontSize="0.9rem" color="#959595eb">
                     raised of{' '}
                     <Text as="span" color="#ffffffeb" fontSize="1rem" mx="3px">
-                        2.000.000$
+                        {campaign.target}
                     </Text>
                     goal
                 </Text>
             </Box>
-            <Progress hasStripe value={64} />
+            <Progress hasStripe value={parseInt((campaign.balance / campaign.target) * 100)} borderRadius={5} />
             <Flex justifyContent="space-between">
                 <Text fontSize="md">
                     <Text as="span" fontSize="1.3rem" fontWeight="bold">
-                        4500
+                        {campaign.approvers}
                     </Text>{' '}
                     supporters
                 </Text>
                 <Text fontSize="md">
                     <Text as="span" fontSize="1.3rem" fontWeight="bold">
-                        78
+                        {dayjs(campaign.deadline).format('DD/MM/YYYY')}
                     </Text>{' '}
                     days left
                 </Text>

@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Center, Heading, Text, useColorModeValue } from '@chakra-ui/react';
 
-export default function CampaignerCard() {
+export default function CampaignerCard({ campaigner }) {
     return (
         <Center>
             <Box
@@ -18,8 +18,14 @@ export default function CampaignerCard() {
                     alt={'Avatar Alt'}
                     mb={4}
                 />
-                <Heading fontSize={'2xl'} fontFamily={'body'}>
-                    Lindsey James
+                <Heading
+                    fontSize="xl"
+                    fontFamily="body"
+                    overflow="hidden"
+                    whiteSpace="nowrap"
+                    textOverflow="ellipsis"
+                    w="320px">
+                    {campaigner}
                 </Heading>
                 <Text fontWeight={600} color={'gray.500'} mb={4}>
                     Campaigner
