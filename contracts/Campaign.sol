@@ -18,10 +18,10 @@ contract Campaign {
     uint public targetContribution;
     uint public deadline;
 
-    uint approversCount = 0;
+    uint approversCount;
     mapping(address => bool) approvers;
 
-    uint requestsCount = 0;
+    uint requestIndex;
     mapping(uint => Request) requests;
 
     modifier onlyManager() {
@@ -59,7 +59,7 @@ contract Campaign {
         string memory des,
         address payable recipient
     ) public onlyManager {
-        Request storage newRequest = requests[requestsCount++];
+        Request storage newRequest = requests[requestIndex++];
         newRequest.amount = amount;
         newRequest.description = des;
         newRequest.recipient = recipient;
@@ -110,7 +110,7 @@ contract Campaign {
             targetContribution,
             deadline,
             address(this).balance,
-            requestsCount + 1,
+            requestIndex,
             approversCount,
             manager
         );

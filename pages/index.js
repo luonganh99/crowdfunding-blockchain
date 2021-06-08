@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CardSlider from '../components/CardSlider';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout';
 import web3 from '../web3';
 import campaignFactory from '../web3/campaignFactory';
 import campaign from '../web3/campaign';
+import toCampaign from '../utils/toCampaign';
 
 export default function Home() {
+    const [campaigns, setCampaigns] = useState([]);
+
     useEffect(() => {
         async function getData() {
             const netId = await web3.eth.net.getId();
@@ -19,13 +22,26 @@ export default function Home() {
             console.log(balance);
 
             // Address of contract
-            const campaignAddress = await campaignFactory('0x0229A6C9eaE942aA4F2104f8086808CD31b3D989')
+            const campaignAddresses = await campaignFactory('0x1f1152cA2cFCCBD96E396a12D336A1637cEe76F2')
                 .methods.getCampaigns()
                 .call();
-            console.log(campaignAddress);
-            const cp = await campaign(campaignAddress[0]).methods.getSummary().call();
-            // const cp = await campaignAddress.map(async (add) => await campaign(add).methods.getSumary().call());
-            console.log(cp);
+            console.log(campaignAddresses);
+            // let campaigns = [];
+            // campaignAddresses.forEach(async (add) => {
+            //     const camp = await campaign(add).methods.getSummary().call();
+            //     console.log(typeof camp);
+            //     campaigns.push(camp);
+            //     console.log(campaigns);
+            // });
+
+            const updatedCampaigns = await Promise.all(
+                campaignAddresses.map(async (add) => {
+                    const camp = await campaign(add).methods.getSummary().call();
+                    return toCampaign(camp);
+                })
+            );
+
+            setCampaigns(updatedCampaigns);
         }
 
         getData();
@@ -34,7 +50,7 @@ export default function Home() {
     return (
         <Layout>
             <Hero />
-            <CardSlider />
+            <CardSlider campaigns={campaigns} />
         </Layout>
     );
 }
