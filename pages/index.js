@@ -9,6 +9,7 @@ import toCampaign from '../utils/toCampaign';
 
 export default function Home() {
     const [campaigns, setCampaigns] = useState([]);
+    console.log('OUTPUT ~ file: index.js ~ line 12 ~ Home ~ campaigns', campaigns);
 
     useEffect(() => {
         async function getData() {
@@ -20,9 +21,8 @@ export default function Home() {
             console.log(netId);
             console.log(accounts);
             console.log(balance);
-
             // List of campainAdress
-            const campaignAddresses = await campaignFactoryWeb3('0x1f1152cA2cFCCBD96E396a12D336A1637cEe76F2')
+            const campaignAddresses = await campaignFactoryWeb3('0x0617E2a324c04046491Ec44d79582d145263c655')
                 .methods.getCampaigns()
                 .call();
             console.log(campaignAddresses);

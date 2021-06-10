@@ -1,3 +1,5 @@
+import web3 from '../web3';
+
 export default function toCampaign(campaign, address) {
     return {
         name: campaign[0],
@@ -5,7 +7,7 @@ export default function toCampaign(campaign, address) {
         min: parseInt(campaign[2]),
         target: parseInt(campaign[3]),
         deadline: campaign[4],
-        balance: parseInt(campaign[5]),
+        balance: parseInt(web3.utils.fromWei(campaign[5])),
         requests: parseInt(campaign[6]),
         approvers: parseInt(campaign[7]),
         manager: campaign[8],

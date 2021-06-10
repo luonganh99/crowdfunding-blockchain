@@ -17,12 +17,10 @@ contract Campaign {
     uint public minimumContribution;
     uint public targetContribution;
     uint public deadline;
-
-    uint approversCount;
-    mapping(address => bool) approvers;
-
-    uint requestIndex;
-    mapping(uint => Request) requests;
+    uint public approversCount;
+    mapping(address => bool) public approvers;
+    uint public requestIndex;
+    mapping(uint => Request) public requests;
 
     modifier onlyManager() {
         require(msg.sender == manager, 'Sender not authorized.');
@@ -43,9 +41,11 @@ contract Campaign {
         targetContribution = target;
         deadline = deadlineDate;
         manager = creator;
+        approversCount = 0;
+        requestIndex = 0;
     }
 
-    function contribute() public payable {
+    function contribution () public payable {
         require(msg.value > minimumContribution, '');
 
         if (approvers[msg.sender] != true) {
@@ -53,6 +53,9 @@ contract Campaign {
             approversCount++;
         }
     }
+
+    function fallback() external payable{}
+
 
     function createRequest(
         uint amount,
