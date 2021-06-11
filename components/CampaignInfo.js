@@ -4,8 +4,37 @@ import { Progress } from '@chakra-ui/progress';
 import dayjs from 'dayjs';
 import { BiDonateHeart } from 'react-icons/bi';
 import { FaFacebook } from 'react-icons/fa';
+import {
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay
+} from '@chakra-ui/modal';
+import { useRef } from 'react';
+import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
+import {
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper
+} from '@chakra-ui/number-input';
+import { useDisclosure } from '@chakra-ui/hooks';
+import { useForm } from 'react-hook-form';
+export default function CampaignInfo({ campaign, onContribute }) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const initialRef = useRef();
 
-export default function CampaignInfo({ campaign }) {
+    const {
+        handleSubmit,
+        register,
+        formState: { errors, isSubmitting },
+        reset
+    } = useForm();
+
     return (
         <Stack>
             <Button
@@ -16,7 +45,8 @@ export default function CampaignInfo({ campaign }) {
                 fontWeight="bold"
                 fontSize="lg"
                 background="#0fffc8"
-                color="#1a202c">
+                color="#1a202c"
+                onClick={onOpen}>
                 CONTRIBUTE NOW
             </Button>
             <Button h={14} colorScheme="facebook" leftIcon={<FaFacebook />} fontWeight="bold" fontSize="md">
@@ -47,6 +77,53 @@ export default function CampaignInfo({ campaign }) {
                     days left
                 </Text>
             </Flex>
+
+            <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
+                <form
+                    onSubmit={handleSubmit(async (values) => {
+                        await onContribute(values);
+                        reset();
+                        onClose();
+                    })}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Contribute</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}>
+                            <FormControl isInvalid={errors.amount}>
+                                <FormLabel>Amount</FormLabel>
+                                <NumberInput min={campaign.min}>
+                                    <NumberInputField
+                                        ref={initialRef}
+                                        placeholder="Ex: $1"
+                                        {...register('amount', {
+                                            required: 'This is required'
+                                        })}
+                                    />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                                <FormErrorMessage>{errors.amount && errors.amount.message}</FormErrorMessage>
+                            </FormControl>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme="blue" mr={3} isLoading={isSubmitting} type="submit">
+                                Contribute
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    reset();
+                                    onClose();
+                                }}>
+                                Cancel
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </form>
+            </Modal>
         </Stack>
     );
 }

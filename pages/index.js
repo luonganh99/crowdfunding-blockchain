@@ -22,7 +22,7 @@ export default function Home() {
             // console.log(accounts);
             // console.log(balance);
             // List of campainAdress
-            const campaignAddresses = await campaignFactoryWeb3('0x0617E2a324c04046491Ec44d79582d145263c655')
+            const campaignAddresses = await campaignFactoryWeb3('0x335E671D8fF289985F6700E724931924d796CBAa')
                 .methods.getCampaigns()
                 .call();
             console.log(campaignAddresses);

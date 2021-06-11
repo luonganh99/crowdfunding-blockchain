@@ -91,6 +91,12 @@ contract Campaign {
         request.isCompleted = true;
     }
 
+    function getIsApprovedRequest(uint index) public returns (bool) {
+        Request storage request = requests[index];
+
+        return request.approvals[msg.sender];
+    }
+
     function getSummary()
         public
         view
