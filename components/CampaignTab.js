@@ -44,8 +44,7 @@ export default function CampaignTab({
                                 <Th>Recipient</Th>
                                 <Th>Count</Th>
                                 <Th>State</Th>
-                                <Th>Approve</Th>
-                                {/* <Th>Finalize</Th> */}
+                                {isManager ? <Th>Finalize</Th> : <Th>Approve</Th>}
                             </Tr>
                         </Thead>
                         <Tbody>
@@ -63,7 +62,7 @@ export default function CampaignTab({
                                             {request.description}
                                         </div>
                                     </Td>
-                                    <Td>{request.amount}</Td>
+                                    <Td>${request.amount}</Td>
                                     <Td>
                                         <div
                                             style={{
@@ -78,14 +77,17 @@ export default function CampaignTab({
                                     <Td>
                                         {request.approvalsCount}/{contributersCount}
                                     </Td>
+                                    <Td>{request.isCompleted ? 'Finalized' : 'Pending'}</Td>
                                     {isManager ? (
                                         <Td>
-                                            <Button
-                                                size="sm"
-                                                colorScheme="teal"
-                                                onClick={() => onFinalizeRequest(index)}>
-                                                <HiOutlinePencilAlt />
-                                            </Button>
+                                            {!request.isCompleted && (
+                                                <Button
+                                                    size="sm"
+                                                    colorScheme="teal"
+                                                    onClick={() => onFinalizeRequest(index)}>
+                                                    <HiOutlinePencilAlt />
+                                                </Button>
+                                            )}
                                         </Td>
                                     ) : (
                                         <Td>
@@ -97,7 +99,6 @@ export default function CampaignTab({
                                             </Button>
                                         </Td>
                                     )}
-                                    <Td>False</Td>
                                 </Tr>
                             ))}
                         </Tbody>

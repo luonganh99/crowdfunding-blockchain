@@ -13,14 +13,14 @@ export default function Home() {
 
     useEffect(() => {
         async function getData() {
-            const netId = await web3.eth.net.getId();
-            await window.ethereum.enable();
-            const accounts = await web3.eth.getAccounts();
-            const balance = await web3.eth.getBalance(accounts[0]);
+            // const netId = await web3.eth.net.getId();
+            // await window.ethereum.enable();
+            // const accounts = await web3.eth.getAccounts();
+            // const balance = await web3.eth.getBalance(accounts[0]);
 
-            console.log(netId);
-            console.log(accounts);
-            console.log(balance);
+            // console.log(netId);
+            // console.log(accounts);
+            // console.log(balance);
             // List of campainAdress
             const campaignAddresses = await campaignFactoryWeb3('0x0617E2a324c04046491Ec44d79582d145263c655')
                 .methods.getCampaigns()

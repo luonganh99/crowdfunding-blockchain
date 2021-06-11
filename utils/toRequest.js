@@ -1,5 +1,11 @@
-export default function toRequest(request) {
+import web3 from '../web3';
+
+export default function toRequest({ amount, approvalsCount, description, isCompleted, recipient }) {
     return {
-        d
+        amount: web3.utils.fromWei(amount),
+        approvalsCount,
+        description,
+        isCompleted,
+        recipient
     };
 }

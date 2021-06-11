@@ -1,21 +1,26 @@
 import { Box, Container, Heading, HStack, Stack } from '@chakra-ui/layout';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import CampaignerCard from '../../components/CampaignerCard';
 import CampaignInfo from '../../components/CampaignInfo';
 import CampaignTab from '../../components/CampaignTab';
 import Layout from '../../components/Layout';
 import SupportersCard from '../../components/SupportersCard';
 import toCampaign from '../../utils/toCampaign';
+import toRequest from '../../utils/toRequest';
 import web3 from '../../web3';
 import campaignWeb3 from '../../web3/campaignWeb3';
+import { AccountsContext } from '../../context/AccountsContext';
+import { useToast } from '@chakra-ui/toast';
 
 export default function Campaign({ address }) {
     const [campaign, setCampaign] = useState({});
     const [requests, setRequests] = useState([]);
     const [supporters, setSupporters] = useState([]);
     const [isManager, setIsManager] = useState(false);
-    const [accounts, setAccounts] = useState([]);
-
+    // const [accounts, setAccounts] = useState([]);
+    const accounts = useContext(AccountsContext);
+    const toast = useToast();
+    console.log(accounts);
     console.log(requests);
     console.log(isManager);
     useEffect(() => {
@@ -26,39 +31,74 @@ export default function Campaign({ address }) {
             const updatedRequests = await Promise.all(
                 Array(updatedCampaign.requests)
                     .fill()
-                    .map((el, i) => {
-                        return campaignWeb3(address).methods.requests(i).call();
+                    .map(async (el, i) => {
+                        const req = await campaignWeb3(address).methods.requests(i).call();
+                        return toRequest(req);
                     })
             );
-            const updatedAccounts = await web3.eth.getAccounts();
-            console.log(updatedAccounts);
-            const updatedIsManager = updatedAccounts[0] === updatedCampaign.manager;
-
-            setAccounts(updatedAccounts);
+            // const updatedAccounts = await web3.eth.getAccounts();
+            // console.log(updatedAccounts);
+            const updatedIsManager = accounts[0] === updatedCampaign.manager;
+            console.log('aaa ', updatedIsManager);
+            // setAccounts(updatedAccounts);
             setRequests(updatedRequests);
             setIsManager(updatedIsManager);
             setCampaign(updatedCampaign);
         };
 
         getCampaign();
-    }, []);
+    }, [accounts]);
 
     const handleFinalizeRequest = async (index) => {
-        const res = await campaignWeb3(address).methods.finalizeRequest(index).send({
-            from: accounts[0]
-        });
-        console.log(res);
+        try {
+            await campaignWeb3(address).methods.finalizeRequest(index).send({
+                from: accounts[0]
+            });
+            const updatedRequests = [...requests];
+            const updatedRequest = { ...updatedRequests[index] };
+            updatedRequest.isCompleted = true;
+            updatedRequests[index] = updatedRequest;
+            setRequests(updatedRequests);
+            toast({
+                title: 'Finalize request successfully',
+                status: 'success',
+                isClosable: true
+            });
+        } catch (err) {
+            toast({
+                title: 'Error',
+                description: err.message,
+                status: 'error',
+                isClosable: true
+            });
+        }
     };
 
     const handleApproveRequest = async (index) => {
-        console.log(index);
-        const res = await campaignWeb3(address).methods.approveRequest(index).send({
-            from: accounts[0]
-        });
-        console.log(res);
+        try {
+            await campaignWeb3(address).methods.approveRequest(index).send({
+                from: accounts[0]
+            });
+            const updatedRequests = [...requests];
+            const updatedRequest = { ...updatedRequests[index] };
+            updatedRequest.approvalsCount++;
+            updatedRequests[index] = updatedRequest;
+            setRequests(updatedRequests);
+            toast({
+                title: 'Approve request successfully',
+                status: 'success',
+                isClosable: true
+            });
+        } catch (err) {
+            toast({
+                title: 'Error',
+                description: err.message,
+                status: 'error',
+                isClosable: true
+            });
+        }
     };
 
-    console.log(campaign);
     return (
         <Layout>
             <Container maxW="container.xl" py={8}>
