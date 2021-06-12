@@ -17,8 +17,10 @@ contract Campaign {
     uint public minimumContribution;
     uint public targetContribution;
     uint public deadline;
+
+    address[] public approverAddresses;
     uint public approversCount;
-    mapping(address => bool) public approvers;
+    mapping(address => uint) public approvers;
     uint public requestIndex;
     mapping(uint => Request) public requests;
 
@@ -48,8 +50,9 @@ contract Campaign {
     function contribution () public payable {
         require(msg.value > minimumContribution, '');
 
-        if (approvers[msg.sender] != true) {
-            approvers[msg.sender] = true;
+        if (approvers[msg.sender] == 0) {
+            approvers[msg.sender] = msg.value;
+            approverAddresses.push(msg.sender);
             approversCount++;
         }
     }
@@ -73,7 +76,7 @@ contract Campaign {
     function approveRequest(uint index) public {
         Request storage request = requests[index];
 
-        require(approvers[msg.sender]);
+        require(approvers[msg.sender] > 0);
         require(!request.approvals[msg.sender]);
         require(!request.isCompleted);
 
@@ -91,10 +94,13 @@ contract Campaign {
         request.isCompleted = true;
     }
 
-    function getIsApprovedRequest(uint index) public returns (bool) {
+    function getIsApprovedRequest(uint index) public view returns (bool) {
         Request storage request = requests[index];
-
         return request.approvals[msg.sender];
+    }
+
+    function getApproverAddresses() public view returns (address[] memory) {
+        return approverAddresses;
     }
 
     function getSummary()

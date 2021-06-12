@@ -1,6 +1,5 @@
 import { Box, Container, Heading, HStack, Stack } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/toast';
-import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import CampaignerCard from '../../components/CampaignerCard';
 import CampaignInfo from '../../components/CampaignInfo';
@@ -10,6 +9,7 @@ import SupportersCard from '../../components/SupportersCard';
 import { AccountsContext } from '../../context/AccountsContext';
 import toCampaign from '../../utils/toCampaign';
 import toRequest from '../../utils/toRequest';
+import toSupporter from '../../utils/toSupporter';
 import web3 from '../../web3';
 import campaignWeb3 from '../../web3/campaignWeb3';
 
@@ -37,7 +37,20 @@ export default function Campaign({ address }) {
                         return toRequest(req);
                     })
             );
+            if (updatedCampaign.approvers > 0) {
+                const supporterAddresses = await campaignWeb3(address).methods.getApproverAddresses().call();
+                console.log(supporterAddresses);
+                const updatedSupporters = await Promise.all(
+                    supporterAddresses.map(async (add) => {
+                        console.log(add);
+                        const sup = await campaignWeb3(address).methods.approvers(add).call();
+                        return toSupporter(sup, add);
+                    })
+                );
+                setSupporters(updatedSupporters);
+            }
             const updatedIsManager = accounts[0] === updatedCampaign.manager;
+
             setRequests(updatedRequests);
             setIsManager(updatedIsManager);
             setCampaign(updatedCampaign);

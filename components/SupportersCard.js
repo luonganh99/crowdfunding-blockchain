@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { BsPeopleFill } from 'react-icons/bs';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
-export default function SupportersCard({ supporters = ['12', '2', '2'] }) {
+export default function SupportersCard({ supporters }) {
     const [currentIndex, setCurrentIndex] = useState(5);
 
     const handlePrevClick = () => {
@@ -29,13 +29,13 @@ export default function SupportersCard({ supporters = ['12', '2', '2'] }) {
                     }
                     alt={'Avatar Alt'}
                 />
-                <Text ml={6} fontSize="md">
-                    Test
+                <Text ml={6} fontSize="md" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" w="60%">
+                    {supporter.address}
                 </Text>
                 <Spacer />
 
                 <Text fontWeight="bold" fontSize="lg">
-                    300 $
+                    $ {supporter.amount}
                 </Text>
             </Flex>
         ));
@@ -44,7 +44,7 @@ export default function SupportersCard({ supporters = ['12', '2', '2'] }) {
     return (
         <Center>
             <Box
-                w={'full'}
+                w="368px"
                 bg={useColorModeValue('white', 'gray.900')}
                 boxShadow={'2xl'}
                 rounded={'lg'}
@@ -53,7 +53,7 @@ export default function SupportersCard({ supporters = ['12', '2', '2'] }) {
                 <HStack alignItems="center" paddingBottom={4} borderBottom="1px white solid" fontSize="4xl" spacing={4}>
                     <BsPeopleFill />
                     <Text fontSize="lg" fontWeight="bold">
-                        4500 Supporters
+                        {supporters.length} Supporters
                     </Text>
                 </HStack>
 
@@ -70,7 +70,9 @@ export default function SupportersCard({ supporters = ['12', '2', '2'] }) {
                             onClick={handlePrevClick}>
                             <RiArrowLeftSLine />
                         </Box>
-                        <Text fontSize="xs">16 - 20 of 4500 donations</Text>
+                        <Text fontSize="xs">
+                            {currentIndex - 4} - {currentIndex} of {supporters.length} donations
+                        </Text>
                         <Box
                             _hover={{
                                 cursor: 'pointer'

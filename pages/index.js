@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import CardSlider from '../components/CardSlider';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout';
-import web3 from '../web3';
+import toCampaign from '../utils/toCampaign';
 import campaignFactoryWeb3 from '../web3/campaignFactoryWeb3';
 import campaignWeb3 from '../web3/campaignWeb3';
-import toCampaign from '../utils/toCampaign';
 
 export default function Home() {
     const [campaigns, setCampaigns] = useState([]);
@@ -22,9 +21,7 @@ export default function Home() {
             // console.log(accounts);
             // console.log(balance);
             // List of campainAdress
-            const campaignAddresses = await campaignFactoryWeb3('0x335E671D8fF289985F6700E724931924d796CBAa')
-                .methods.getCampaigns()
-                .call();
+            const campaignAddresses = await campaignFactoryWeb3().methods.getCampaigns().call();
             console.log(campaignAddresses);
 
             const updatedCampaigns = await Promise.all(
