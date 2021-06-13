@@ -1,9 +1,7 @@
 import { Button } from '@chakra-ui/button';
+import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
+import { useDisclosure } from '@chakra-ui/hooks';
 import { Box, Flex, Stack, Text } from '@chakra-ui/layout';
-import { Progress } from '@chakra-ui/progress';
-import dayjs from 'dayjs';
-import { BiDonateHeart } from 'react-icons/bi';
-import { FaFacebook } from 'react-icons/fa';
 import {
     Modal,
     ModalBody,
@@ -13,8 +11,6 @@ import {
     ModalHeader,
     ModalOverlay
 } from '@chakra-ui/modal';
-import { useRef } from 'react';
-import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
 import {
     NumberDecrementStepper,
     NumberIncrementStepper,
@@ -22,8 +18,12 @@ import {
     NumberInputField,
     NumberInputStepper
 } from '@chakra-ui/number-input';
-import { useDisclosure } from '@chakra-ui/hooks';
+import { Progress } from '@chakra-ui/progress';
+import dayjs from 'dayjs';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { BiDonateHeart } from 'react-icons/bi';
+import { FaFacebook } from 'react-icons/fa';
 
 var relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
@@ -44,13 +44,13 @@ export default function CampaignInfo({ campaign, onContribute }) {
             <Button
                 h={16}
                 leftIcon={<BiDonateHeart fontSize="30px" />}
-                colorScheme="teal"
                 variant="solid"
                 fontWeight="bold"
                 fontSize="lg"
                 background="#0fffc8"
                 color="#1a202c"
-                onClick={onOpen}>
+                onClick={onOpen}
+                _hover={{ background: '#02fa71' }}>
                 CONTRIBUTE NOW
             </Button>
             <Button h={14} colorScheme="facebook" leftIcon={<FaFacebook />} fontWeight="bold" fontSize="md">

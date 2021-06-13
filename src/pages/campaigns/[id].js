@@ -22,33 +22,25 @@ export default function Campaign({ address }) {
     const accounts = useContext(AccountsContext);
     const toast = useToast();
 
-    console.log(campaign);
-    console.log(requests);
-    console.log('managerrrrrrrrrr ', isManager);
-    console.log('accountssss ', accounts);
     useEffect(() => {
         const getCampaign = async () => {
             const camp = await campaignWeb3(address).methods.getSummary().call();
             const updatedCampaign = toCampaign(camp, address);
             if (updatedCampaign.approvers > 0) {
                 const supporterAddresses = await campaignWeb3(address).methods.getApproverAddresses().call();
-                console.log(supporterAddresses);
                 const updatedSupporters = await Promise.all(
                     supporterAddresses.map(async (add) => {
-                        console.log(add);
                         const sup = await campaignWeb3(address).methods.approvers(add).call();
                         return toSupporter(sup, add);
                     })
                 );
                 setSupporters(updatedSupporters);
             }
-
             const updatedRequests = await Promise.all(
                 Array(updatedCampaign.requests)
                     .fill()
                     .map(async (el, i) => {
                         const req = await campaignWeb3(address).methods.requests(i).call();
-                        console.log(i);
                         const isApproved = await campaignWeb3(address).methods.getIsApprovedRequest(i).call();
                         return toRequest(req, isApproved);
                     })
