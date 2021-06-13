@@ -103,7 +103,7 @@ export default function CampaignTab({
                                                     {request.description}
                                                 </div>
                                             </Td>
-                                            <Td>${request.amount}</Td>
+                                            <Td>{request.amount} Eth</Td>
                                             <Td>
                                                 <div
                                                     style={{
@@ -132,12 +132,14 @@ export default function CampaignTab({
                                                 </Td>
                                             ) : (
                                                 <Td>
-                                                    <Button
-                                                        size="sm"
-                                                        colorScheme="teal"
-                                                        onClick={() => onApproveRequest(index)}>
-                                                        <AiOutlineLike />
-                                                    </Button>
+                                                    {!request.isApproved && (
+                                                        <Button
+                                                            size="sm"
+                                                            colorScheme="teal"
+                                                            onClick={() => onApproveRequest(index)}>
+                                                            <AiOutlineLike />
+                                                        </Button>
+                                                    )}
                                                 </Td>
                                             )}
                                         </Tr>
@@ -176,7 +178,7 @@ export default function CampaignTab({
                                 <FormLabel>Amount</FormLabel>
                                 <NumberInput min={0}>
                                     <NumberInputField
-                                        placeholder="Ex: $1"
+                                        placeholder="Ex: 1 Eth"
                                         {...register('amount', {
                                             required: 'This is required'
                                         })}

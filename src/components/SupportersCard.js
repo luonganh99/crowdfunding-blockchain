@@ -25,7 +25,7 @@ export default function SupportersCard({ supporters }) {
             <Flex key={index} direction="row" alignItems="center">
                 <Avatar
                     src={
-                        'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
+                        'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/sheep_mutton_animal_avatar-512.png'
                     }
                     alt={'Avatar Alt'}
                 />
@@ -35,7 +35,7 @@ export default function SupportersCard({ supporters }) {
                 <Spacer />
 
                 <Text fontWeight="bold" fontSize="lg">
-                    $ {supporter.amount}
+                    {supporter.amount} Eth
                 </Text>
             </Flex>
         ));
@@ -50,7 +50,13 @@ export default function SupportersCard({ supporters }) {
                 rounded={'lg'}
                 p={6}
                 textAlign={'center'}>
-                <HStack alignItems="center" paddingBottom={4} borderBottom="1px white solid" fontSize="4xl" spacing={4}>
+                <HStack
+                    alignItems="center"
+                    paddingBottom={4}
+                    borderBottom="1px white solid"
+                    fontSize="4xl"
+                    spacing={4}
+                    mb={5}>
                     <BsPeopleFill />
                     <Text fontSize="lg" fontWeight="bold">
                         {supporters.length} Supporters
@@ -58,9 +64,6 @@ export default function SupportersCard({ supporters }) {
                 </HStack>
 
                 <Stack spacing={6}>
-                    <Text fontSize="lg" mt={4}>
-                        Most Generous
-                    </Text>
                     <Stack spacing={4}>{renderSupporters()}</Stack>
                     <HStack justifyContent="center" alignItems="center" fontSize="xl" spacing={4}>
                         <Box
@@ -71,7 +74,7 @@ export default function SupportersCard({ supporters }) {
                             <RiArrowLeftSLine />
                         </Box>
                         <Text fontSize="xs">
-                            {currentIndex - 4} - {currentIndex} of {supporters.length} donations
+                            {currentIndex - 4} - {currentIndex} of {supporters.length} supporters
                         </Text>
                         <Box
                             _hover={{

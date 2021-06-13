@@ -24,6 +24,10 @@ import {
 } from '@chakra-ui/number-input';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { useForm } from 'react-hook-form';
+
+var relativeTime = require('dayjs/plugin/relativeTime');
+dayjs.extend(relativeTime);
+
 export default function CampaignInfo({ campaign, onContribute }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef();
@@ -53,11 +57,11 @@ export default function CampaignInfo({ campaign, onContribute }) {
                 Spread the world
             </Button>
             <Box>
-                <Text fontSize="2.6rem">{campaign.balance}</Text>
+                <Text fontSize="2.6rem">{campaign.balance} ETH</Text>
                 <Text fontSize="0.9rem" color="#959595eb">
                     raised of{' '}
                     <Text as="span" color="#ffffffeb" fontSize="1rem" mx="3px">
-                        {campaign.target}
+                        {campaign.target} Eth
                     </Text>
                     goal
                 </Text>
@@ -72,9 +76,9 @@ export default function CampaignInfo({ campaign, onContribute }) {
                 </Text>
                 <Text fontSize="md">
                     <Text as="span" fontSize="1.3rem" fontWeight="bold">
-                        {dayjs(campaign.deadline).format('DD/MM/YYYY')}
+                        {dayjs().to(campaign.deadline, true)}
                     </Text>{' '}
-                    days left
+                    left
                 </Text>
             </Flex>
 
@@ -95,7 +99,7 @@ export default function CampaignInfo({ campaign, onContribute }) {
                                 <NumberInput min={campaign.min}>
                                     <NumberInputField
                                         ref={initialRef}
-                                        placeholder="Ex: $1"
+                                        placeholder="Ex: 1 Eth"
                                         {...register('amount', {
                                             required: 'This is required'
                                         })}

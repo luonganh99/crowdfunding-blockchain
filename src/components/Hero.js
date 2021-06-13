@@ -1,19 +1,19 @@
-import { Button, Center, Container, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Button, Center, Container, Heading, Stack, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 
 export default function CallToActionWithIllustration() {
     return (
         <Container maxW={'5xl'}>
             <Stack textAlign={'center'} align={'center'} spacing={{ base: 8, md: 8 }} py={{ base: 5, md: 8 }}>
-                <Heading fontWeight={600} fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }} lineHeight={'110%'}>
-                    Meeting scheduling{' '}
+                <Heading fontWeight={600} fontSize="5xl" lineHeight={'110%'}>
+                    Smart Contract-Based{' '}
                     <Text as={'span'} color={'orange.400'}>
-                        made easy
+                        CrowdFunding
                     </Text>
                 </Heading>
                 <Text color={'gray.500'} maxW={'3xl'}>
-                    Never miss a meeting. Never be late for one too. Keep track of your meetings and receive smart
-                    reminders in appropriate times. Read your smart “Daily Agenda” every morning.
+                    A new way of crowdfunding project via ethereum smart contract blockchain technology without any
+                    middleman to function or to manage a user’s information.
                 </Text>
                 <Stack spacing={6} direction={'row'}>
                     <Button
@@ -22,10 +22,10 @@ export default function CallToActionWithIllustration() {
                         colorScheme={'orange'}
                         bg={'orange.400'}
                         _hover={{ bg: 'orange.500' }}>
-                        Get started
+                        New Campaign
                     </Button>
                     <Button rounded={'full'} px={6}>
-                        Learn more
+                        Find your Campaign
                     </Button>
                 </Stack>
                 <Center>

@@ -5,7 +5,6 @@ let web3;
 if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
     // we are in the browser and meta mask is installed
     web3 = new Web3(window.web3.currentProvider);
-    console.log(web3);
 } else {
     // we are on the server *OR* meta mask is not running
     // creating our own provider

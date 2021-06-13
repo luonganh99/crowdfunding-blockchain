@@ -8,22 +8,10 @@ import campaignWeb3 from '../web3/campaignWeb3';
 
 export default function Home() {
     const [campaigns, setCampaigns] = useState([]);
-    console.log('OUTPUT ~ file: index.js ~ line 12 ~ Home ~ campaigns', campaigns);
 
     useEffect(() => {
         async function getData() {
-            // const netId = await web3.eth.net.getId();
-            // await window.ethereum.enable();
-            // const accounts = await web3.eth.getAccounts();
-            // const balance = await web3.eth.getBalance(accounts[0]);
-
-            // console.log(netId);
-            // console.log(accounts);
-            // console.log(balance);
-            // List of campainAdress
             const campaignAddresses = await campaignFactoryWeb3().methods.getCampaigns().call();
-            console.log(campaignAddresses);
-
             const updatedCampaigns = await Promise.all(
                 campaignAddresses.map(async (add) => {
                     const campaign = await campaignWeb3(add).methods.getSummary().call();

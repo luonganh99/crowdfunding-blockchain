@@ -16,6 +16,6 @@ module.exports = {
         return config;
     },
     images: {
-        domains: ['images.unsplash.com']
+        domains: ['images.unsplash.com', 'cdn4.iconfinder.com']
     }
 };

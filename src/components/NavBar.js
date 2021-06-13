@@ -28,15 +28,19 @@ import {
     MenuButton,
     MenuItem,
     MenuList,
+    Textarea,
     useColorModeValue,
     useDisclosure
 } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/toast';
 import { useRouter } from 'next/router';
 import { useContext, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { AccountsContext } from '../context/AccountsContext';
 import campaignFactoryWeb3 from '../web3/campaignFactoryWeb3';
+
+import ReactDatePicker from 'react-datepicker';
+import dayjs from 'dayjs';
 
 const Links = ['Home'];
 
@@ -56,7 +60,6 @@ const NavLink = ({ children }) => (
 
 export default function Navbar() {
     const accounts = useContext(AccountsContext);
-
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef();
     const toast = useToast();
@@ -66,14 +69,17 @@ export default function Navbar() {
         handleSubmit,
         register,
         formState: { errors, isSubmitting },
-        reset
+        reset,
+        control
     } = useForm();
 
     const handleCreateCampaign = async ({ name, description, min, target, deadline }) => {
         try {
-            await campaignFactoryWeb3().methods.createCampaign(name, description, min, target, deadline).send({
-                from: accounts[0]
-            });
+            await campaignFactoryWeb3()
+                .methods.createCampaign(name, description, min, target, dayjs(deadline).valueOf())
+                .send({
+                    from: accounts[0]
+                });
 
             toast({
                 title: 'Create campaign successfully',
@@ -81,10 +87,12 @@ export default function Navbar() {
                 isClosable: true
             });
 
+            const campaignAddresses = await campaignFactoryWeb3().methods.getCampaigns().call();
+
             reset();
             onClose();
 
-            router.push('/');
+            router.push(`/campaigns/${campaignAddresses[campaignAddresses.length - 1]}`);
         } catch (err) {
             console.log(err);
         }
@@ -92,17 +100,11 @@ export default function Navbar() {
 
     return (
         <>
+            {/* Navbar */}
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                    {/* <IconButton
-                        size={'md'}
-                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                        aria-label={'Open Menu'}
-                        display={{ md: 'none' }}
-                        onClick={isOpen ? onClose : onOpen}
-                    /> */}
                     <HStack spacing={8} alignItems={'center'}>
-                        <Box>Logo</Box>
+                        <Box fontWeight="bold">CROWD FUNDING</Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link) => (
                                 <NavLink key={link}>{link}</NavLink>
@@ -124,31 +126,18 @@ export default function Navbar() {
                                 <Avatar
                                     size={'sm'}
                                     src={
-                                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                        'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'
                                     }
                                 />
                             </MenuButton>
                             <MenuList>
                                 <MenuItem>{accounts[0]}</MenuItem>
-                                {/* <MenuItem>Link 2</MenuItem>
-                                <MenuDivider />
-                                <MenuItem>Link 3</MenuItem> */}
                             </MenuList>
                         </Menu>
                     </Flex>
                 </Flex>
-                {/* 
-                {isOpen ? (
-                    <Box pb={4} display={{ md: 'none' }}>
-                        <Stack as={'nav'} spacing={4}>
-                            {Links.map((link) => (
-                                <NavLink key={link}>{link}</NavLink>
-                            ))}
-                        </Stack>
-                    </Box>
-                ) : null} */}
             </Box>
-
+            {/* MODAL */}
             <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose} size="xl">
                 <ModalOverlay />
                 <ModalContent>
@@ -160,6 +149,7 @@ export default function Navbar() {
                                 <FormLabel>Name</FormLabel>
                                 <Input
                                     ref={initialRef}
+                                    placeholder="Enter your campaign name"
                                     {...register('name', {
                                         required: 'This is required'
                                     })}
@@ -169,7 +159,8 @@ export default function Navbar() {
 
                             <FormControl mt={4} isInvalid={errors.description}>
                                 <FormLabel>Description</FormLabel>
-                                <Input
+                                <Textarea
+                                    placeholder="Enter your campaign description"
                                     {...register('description', {
                                         required: 'This is required'
                                     })}
@@ -181,7 +172,7 @@ export default function Navbar() {
                                 <FormLabel>Minimum Per Contribution</FormLabel>
                                 <NumberInput min={0}>
                                     <NumberInputField
-                                        placeholder="Ex: $1"
+                                        placeholder="Ex: 1 Eth"
                                         {...register('min', {
                                             required: 'This is required'
                                         })}
@@ -198,7 +189,7 @@ export default function Navbar() {
                                 <FormLabel>Target</FormLabel>
                                 <NumberInput target={0}>
                                     <NumberInputField
-                                        placeholder="Ex: $100"
+                                        placeholder="Ex: 100 Eth"
                                         {...register('target', {
                                             required: 'This is required'
                                         })}
@@ -213,11 +204,21 @@ export default function Navbar() {
 
                             <FormControl mt={4} isInvalid={errors.deadline}>
                                 <FormLabel>Finished Date</FormLabel>
-                                <Input
-                                    {...register('deadline', {
-                                        required: 'This is required'
-                                    })}
-                                />
+                                <div className="dark-theme">
+                                    <Controller
+                                        name="deadline"
+                                        control={control}
+                                        defaultValue={null}
+                                        render={({ field }) => (
+                                            <ReactDatePicker
+                                                placeholderText="Enter your finished date"
+                                                selected={field.value}
+                                                onChange={field.onChange}
+                                                className="react-datapicker__input-text"
+                                            />
+                                        )}
+                                    />
+                                </div>
                                 <FormErrorMessage>{errors.deadline && errors.deadline.message}</FormErrorMessage>
                             </FormControl>
                         </ModalBody>

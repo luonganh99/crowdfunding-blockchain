@@ -4,6 +4,8 @@ import { BiTime } from 'react-icons/bi';
 import { FaHeart } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+var relativeTime = require('dayjs/plugin/relativeTime');
+dayjs.extend(relativeTime);
 
 export default function Card({ campaign }) {
     const router = useRouter();
@@ -39,7 +41,12 @@ export default function Card({ campaign }) {
                     />
                 </Box>
                 <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-                    <Avatar src={'https://avatars0.githubusercontent.com/u/1164541?v=4'} alt={'Author'} />
+                    <Avatar
+                        src={
+                            'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/scientist_einstein_avatar_professor-512.png'
+                        }
+                        alt={'Author'}
+                    />
                     <Stack direction={'column'} spacing={0} fontSize={'sm'}>
                         <Text
                             fontWeight={600}
@@ -91,8 +98,7 @@ export default function Card({ campaign }) {
                     <Flex flex="row" justifyContent="center" alignItems="center">
                         <BiTime />
                         <Text ml={3} fontSize="0.9rem">
-                            End on
-                            <span> {dayjs(campaign.deadline).format('DD/MM/YYYY')}</span>
+                            <span> {dayjs().to(campaign.deadline, true)} left</span>
                         </Text>
                     </Flex>
 

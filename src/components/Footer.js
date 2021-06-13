@@ -66,10 +66,8 @@ export default function Footer() {
             <Container as={Stack} maxW={'6xl'} py={10}>
                 <SimpleGrid templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }} spacing={8}>
                     <Stack spacing={6}>
-                        <Box>
-                            <Logo color={useColorModeValue('gray.700', 'white')} />
-                        </Box>
-                        <Text fontSize={'sm'}>© 2020 Chakra Templates. All rights reserved</Text>
+                        <Box>{/* <Logo color={useColorModeValue('gray.700', 'white')} /> */}</Box>
+                        <Text fontSize={'sm'}>© 2021 CNM. All rights reserved</Text>
                         <Stack direction={'row'} spacing={6}>
                             <SocialButton label={'Twitter'} href={'#'}>
                                 <FaTwitter />

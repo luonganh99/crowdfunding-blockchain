@@ -24,19 +24,12 @@ export default function Campaign({ address }) {
 
     console.log(campaign);
     console.log(requests);
-    console.log(isManager);
+    console.log('managerrrrrrrrrr ', isManager);
+    console.log('accountssss ', accounts);
     useEffect(() => {
         const getCampaign = async () => {
             const camp = await campaignWeb3(address).methods.getSummary().call();
             const updatedCampaign = toCampaign(camp, address);
-            const updatedRequests = await Promise.all(
-                Array(updatedCampaign.requests)
-                    .fill()
-                    .map(async (el, i) => {
-                        const req = await campaignWeb3(address).methods.requests(i).call();
-                        return toRequest(req);
-                    })
-            );
             if (updatedCampaign.approvers > 0) {
                 const supporterAddresses = await campaignWeb3(address).methods.getApproverAddresses().call();
                 console.log(supporterAddresses);
@@ -49,6 +42,17 @@ export default function Campaign({ address }) {
                 );
                 setSupporters(updatedSupporters);
             }
+
+            const updatedRequests = await Promise.all(
+                Array(updatedCampaign.requests)
+                    .fill()
+                    .map(async (el, i) => {
+                        const req = await campaignWeb3(address).methods.requests(i).call();
+                        console.log(i);
+                        const isApproved = await campaignWeb3(address).methods.getIsApprovedRequest(i).call();
+                        return toRequest(req, isApproved);
+                    })
+            );
             const updatedIsManager = accounts[0] === updatedCampaign.manager;
 
             setRequests(updatedRequests);
@@ -58,7 +62,7 @@ export default function Campaign({ address }) {
         };
 
         getCampaign();
-    }, [isRendering]);
+    }, [accounts, isRendering, address]);
 
     const handleContribute = async ({ amount }) => {
         try {
@@ -81,9 +85,11 @@ export default function Campaign({ address }) {
 
     const handleCreateRequest = async ({ description, amount, recipient }) => {
         try {
-            await campaignWeb3(address).methods.createRequest(web3.utils.toWei(amount), description, recipient).send({
-                from: accounts[0]
-            });
+            await campaignWeb3(address)
+                .methods.createRequest(web3.utils.toWei(amount, 'ether'), description, recipient)
+                .send({
+                    from: accounts[0]
+                });
             toast({
                 title: 'Create new request successfully',
                 status: 'success',
