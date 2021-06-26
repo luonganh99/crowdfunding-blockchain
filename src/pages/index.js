@@ -3,6 +3,7 @@ import CardSlider from '../components/CardSlider';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout';
 import toCampaign from '../utils/toCampaign';
+import web3 from '../web3';
 import campaignFactoryWeb3 from '../web3/campaignFactoryWeb3';
 import campaignWeb3 from '../web3/campaignWeb3';
 
@@ -20,6 +21,10 @@ export default function Home() {
             );
 
             setCampaigns(updatedCampaigns);
+        }
+
+        if (!web3) {
+            return;
         }
 
         getData();

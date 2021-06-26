@@ -74,6 +74,14 @@ export default function Navbar() {
     } = useForm();
 
     const handleCreateCampaign = async ({ name, description, min, target, deadline }) => {
+        if (accounts.length === 0) {
+            toast({
+                title: 'Error',
+                description: 'Please install meta mask extension first to do this action',
+                status: 'error',
+                isClosable: true
+            });
+        }
         try {
             await campaignFactoryWeb3()
                 .methods.createCampaign(name, description, min, target, dayjs(deadline).valueOf())

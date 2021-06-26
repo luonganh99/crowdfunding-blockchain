@@ -17,11 +17,20 @@ export default function CardSlider({ campaigns }) {
                 <Heading color="orange.400">Trending Campaigns</Heading>
                 <Text color={'gray.500'}>View the fundraisers that are most active right now</Text>
             </Center>
-            <Slider {...settings}>
-                {campaigns?.map((campaign, index) => (
-                    <Card key={index} campaign={campaign} />
-                ))}
-            </Slider>
+            {campaigns.length !== 0 ? (
+                <Slider {...settings}>
+                    {campaigns.map((campaign, index) => (
+                        <Card key={index} campaign={campaign} />
+                    ))}
+                </Slider>
+            ) : (
+                <Center>
+                    <Text color={'gray.600'} fontSize="sm">
+                        Currently there are no campaign right now or you have not installed meta mask yet. If that,
+                        please install meta mask and come back later!
+                    </Text>
+                </Center>
+            )}
         </Box>
     );
 }

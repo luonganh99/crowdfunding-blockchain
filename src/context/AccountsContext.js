@@ -12,6 +12,11 @@ export default function AccountsProvider({ children }) {
             const updatedAccounts = await web3.eth.getAccounts();
             setAccounts(updatedAccounts);
         };
+
+        if (!web3) {
+            return;
+        }
+
         getAccounts();
     }, []);
 
