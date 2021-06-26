@@ -19,6 +19,7 @@ export default function Campaign({ address }) {
     const [supporters, setSupporters] = useState([]);
     const [isManager, setIsManager] = useState(false);
     const [isRendering, setIsRendering] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const accounts = useContext(AccountsContext);
     const toast = useToast();
 
@@ -95,6 +96,7 @@ export default function Campaign({ address }) {
 
     const handleFinalizeRequest = async (index) => {
         try {
+            setIsLoading(true);
             await campaignWeb3(address).methods.finalizeRequest(index).send({
                 from: accounts[0]
             });
@@ -111,11 +113,14 @@ export default function Campaign({ address }) {
                 status: 'error',
                 isClosable: true
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleApproveRequest = async (index) => {
         try {
+            setIsLoading(true);
             await campaignWeb3(address).methods.approveRequest(index).send({
                 from: accounts[0]
             });
@@ -132,6 +137,8 @@ export default function Campaign({ address }) {
                 status: 'error',
                 isClosable: true
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -147,6 +154,7 @@ export default function Campaign({ address }) {
                                 description={campaign.description}
                                 contributersCount={campaign.approvers}
                                 requests={requests}
+                                isLoading={isLoading}
                                 isManager={isManager}
                                 onFinalizeRequest={handleFinalizeRequest}
                                 onApproveRequest={handleApproveRequest}

@@ -33,6 +33,7 @@ export default function CampaignTab({
     requests,
     contributersCount,
     isManager,
+    isLoading,
     onFinalizeRequest,
     onApproveRequest,
     onCreateRequest
@@ -123,6 +124,7 @@ export default function CampaignTab({
                                                 <Td>
                                                     {!request.isCompleted && (
                                                         <Button
+                                                            isLoading={isLoading}
                                                             size="sm"
                                                             colorScheme="teal"
                                                             onClick={() => onFinalizeRequest(index)}>
@@ -134,6 +136,7 @@ export default function CampaignTab({
                                                 <Td>
                                                     {!request.isApproved && (
                                                         <Button
+                                                            isLoading={isLoading}
                                                             size="sm"
                                                             colorScheme="teal"
                                                             onClick={() => onApproveRequest(index)}>
