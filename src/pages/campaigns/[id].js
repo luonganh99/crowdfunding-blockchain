@@ -1,5 +1,6 @@
 import { Box, Container, Heading, HStack, Stack } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/toast';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import CampaignerCard from '../../components/CampaignerCard';
 import CampaignInfo from '../../components/CampaignInfo';
@@ -13,7 +14,7 @@ import toSupporter from '../../utils/toSupporter';
 import web3 from '../../web3';
 import campaignWeb3 from '../../web3/campaignWeb3';
 
-export default function Campaign({ address }) {
+export default function Campaign() {
     const [campaign, setCampaign] = useState({});
     const [requests, setRequests] = useState([]);
     const [supporters, setSupporters] = useState([]);
@@ -22,6 +23,8 @@ export default function Campaign({ address }) {
     const [isLoading, setIsLoading] = useState(false);
     const accounts = useContext(AccountsContext);
     const toast = useToast();
+    const router = useRouter();
+    const { id: address } = router.query;
 
     useEffect(() => {
         const getCampaign = async () => {
@@ -173,19 +176,19 @@ export default function Campaign({ address }) {
     );
 }
 
-export async function getServerSideProps({ params }) {
-    // const address = params.id;
-    // const campaign = await campaignWeb3(address).methods.getSummary().call();
-    // console.log(campaign);
-    // return {
-    //     props: {
-    //         campaign: toCampaign(campaign, address)
-    //     }
-    // };
+// export async function getServerSideProps({ params }) {
+//     // const address = params.id;
+//     // const campaign = await campaignWeb3(address).methods.getSummary().call();
+//     // console.log(campaign);
+//     // return {
+//     //     props: {
+//     //         campaign: toCampaign(campaign, address)
+//     //     }
+//     // };
 
-    return {
-        props: {
-            address: params.id
-        }
-    };
-}
+//     return {
+//         props: {
+//             address: params.id
+//         }
+//     };
+// }

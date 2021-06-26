@@ -1,34 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crowdfunding Smart Contract
 
-## Getting Started
+A new way of crowdfunding project via ethereum smart contract blockchain technology without any middleman to function or to manage a user’s information.
 
-First, run the development server:
+## Screen-shot
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Home Page
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Home Page 1](https://drive.google.com/uc?id=1-8R-U5kPKtGfDOZ1VdjSjOop_c22nvuD)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+![Home Page 2](https://drive.google.com/uc?id=1fd1EMXjbteL-ZZDKBgsXik0zl8cQI8VD)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Campaigns Detail
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+![Campaigns Detail 1](https://drive.google.com/uc?id=1nfXLRBf6ch3TJyi9ZFLVKvk6RdxNnkAQ)
 
-## Learn More
+![Campaigns Detail 2](https://drive.google.com/uc?id=1x-Yo6pnxx6LaIV8c7MFkQ0KwCpT5NwXE)
 
-To learn more about Next.js, take a look at the following resources:
+![Campaigns Detail 2](https://drive.google.com/uc?id=13C0n7P8A8-AjpiCmCNq6EdVCu0ltSwsw)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Create Campaign
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Create Campaign](https://drive.google.com/uc?id=1UwzYWxjZG1b-9XKMf35Nbj5cYz35bvlO)
 
-## Deploy on Vercel
+### `How to use`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Install **Metamask** as Google Chrome Extension and Create an account.
+2. Request Ether by sharing your ethereum address in social media <br>(`https://faucet.rinkeby.io/)`
+3. Go to https://crowdfunding-blockchain.vercel.app/ and connect to Metamask account
+4. Enjoy our website <3
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### `How to install`
+
+1. Install dependencies\*\*
+    > npm install
+2. Run application\*\*
+    > npm run dev
+
+## `Routing`
+
+| Path             | Description                      |
+| ---------------- | -------------------------------- |
+| /                | Homepage                         |
+| /campaigns/0x... | Detail campaign at address 0x... |
