@@ -11,7 +11,7 @@ import {
     IconButton,
     useColorModeValue
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaGithub, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
 
 const Logo = (props) => {
@@ -69,14 +69,16 @@ export default function Footer() {
                         <Box>{/* <Logo color={useColorModeValue('gray.700', 'white')} /> */}</Box>
                         <Text fontSize={'sm'}>© 2021 CNM. All rights reserved</Text>
                         <Stack direction={'row'} spacing={6}>
-                            <SocialButton label={'Twitter'} href={'#'}>
+                            {/* <SocialButton label={'Twitter'} href={'#'}>
                                 <FaTwitter />
                             </SocialButton>
                             <SocialButton label={'YouTube'} href={'#'}>
                                 <FaYoutube />
-                            </SocialButton>
-                            <SocialButton label={'Instagram'} href={'#'}>
-                                <FaInstagram />
+                            </SocialButton> */}
+                            <SocialButton
+                                label={'Github'}
+                                href={'https://github.com/luonganh99/crowdfunding-blockchain'}>
+                                <FaGithub />
                             </SocialButton>
                         </Stack>
                     </Stack>

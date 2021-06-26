@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
         // we are in the browser and meta mask is installed
         web3 = new Web3(window.web3.currentProvider);
     } else {
-        window.alert('Please install meta mask extension first to fully access to this page');
+        window.alert('Please install meta mask extension first to fully access to this page. Visit guide section for more detail');
     }
 }
 

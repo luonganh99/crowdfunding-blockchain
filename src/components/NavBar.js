@@ -42,9 +42,18 @@ import campaignFactoryWeb3 from '../web3/campaignFactoryWeb3';
 import ReactDatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
 
-const Links = ['Home'];
+const Links = [
+    {
+        name: 'Home',
+        href: '/'
+    },
+    {
+        name: 'Guide',
+        href: 'https://github.com/luonganh99/crowdfunding-blockchain#how-to-use'
+    }
+];
 
-const NavLink = ({ children }) => (
+const NavLink = ({ children, href }) => (
     <Link
         px={2}
         py={1}
@@ -53,7 +62,7 @@ const NavLink = ({ children }) => (
             textDecoration: 'none',
             bg: useColorModeValue('gray.200', 'gray.700')
         }}
-        href={'/'}>
+        href={href}>
         {children}
     </Link>
 );
@@ -114,8 +123,10 @@ export default function Navbar() {
                     <HStack spacing={8} alignItems={'center'}>
                         <Box fontWeight="bold">CROWD FUNDING</Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-                            {Links.map((link) => (
-                                <NavLink key={link}>{link}</NavLink>
+                            {Links.map(({ name, href }) => (
+                                <NavLink key={name} href={href}>
+                                    {name}
+                                </NavLink>
                             ))}
                         </HStack>
                     </HStack>

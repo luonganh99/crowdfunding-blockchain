@@ -2,6 +2,20 @@
 
 A new way of crowdfunding project via ethereum smart contract blockchain technology without any middleman to function or to manage a user’s information.
 
+### `How to use`
+
+1. Install **Metamask** as Google Chrome Extension and Create an account.
+2. Request Ether by sharing your ethereum address in social media (https://faucet.rinkeby.io/)
+3. Go to https://crowdfunding-blockchain.vercel.app/ and connect to Metamask account
+4. Enjoy our website <3
+
+### `How to install`
+
+1. Install dependencies
+    > npm install
+2. Run application
+    > npm run dev
+
 ## Screen-shot
 
 ### Home Page
@@ -22,21 +36,7 @@ A new way of crowdfunding project via ethereum smart contract blockchain technol
 
 ![Create Campaign](https://drive.google.com/uc?id=1UwzYWxjZG1b-9XKMf35Nbj5cYz35bvlO)
 
-### `How to use`
-
-1. Install **Metamask** as Google Chrome Extension and Create an account.
-2. Request Ether by sharing your ethereum address in social media <br>(`https://faucet.rinkeby.io/)`
-3. Go to https://crowdfunding-blockchain.vercel.app/ and connect to Metamask account
-4. Enjoy our website <3
-
-### `How to install`
-
-1. Install dependencies\*\*
-    > npm install
-2. Run application\*\*
-    > npm run dev
-
-## `Routing`
+### `Routing`
 
 | Path             | Description                      |
 | ---------------- | -------------------------------- |
